@@ -1,12 +1,3 @@
-/**
- * CapacityOS Database Client
- * 
- * Wrapper around the `team-db` CLI for Turso/SQLite database access.
- * All queries are executed via `team-db` to ensure sync with the team's shared database.
- * 
- * IMPORTANT: Only use this client - never use sqlite3 directly.
- */
-
 import { execSync } from "child_process";
 
 export interface DbResult {
@@ -19,7 +10,8 @@ export interface DbResult {
  */
 export function query(sql: string): DbResult[] {
   try {
-    const output = execSync(`team-db "${sql.replace(/"/g, '\\"')}"`, {
+    const escapedSql = sql.replace(/"/g, '\\"');
+    const output = execSync(`team-db "${escapedSql}"`, {
       encoding: "utf-8",
       timeout: 30000,
     });
@@ -31,7 +23,7 @@ export function query(sql: string): DbResult[] {
 }
 
 /**
- * Execute a single SQL statement (for INSERT/UPDATE/DELETE).
+ * Execute a single SQL INSERT/UPDATE/DELETE.
  * Returns the parsed JSON result.
  */
 export function execute(sql: string): DbResult[] {
@@ -44,6 +36,16 @@ export function execute(sql: string): DbResult[] {
 export function getById(table: string, id: string): DbResult | null {
   const results = query(
     `SELECT * FROM ${table} WHERE id = '${id.replace(/'/g, "''")}'`
+  );
+  return results.length > 0 ? results[0] : null;
+}
+
+/**
+ * Get a single record by a field value.
+ */
+export function getByField(table: string, field: string, value: string): DbResult | null {
+  const results = query(
+    `SELECT * FROM ${table} WHERE ${field} = '${value.replace(/'/g, "''")}' LIMIT 1`
   );
   return results.length > 0 ? results[0] : null;
 }
