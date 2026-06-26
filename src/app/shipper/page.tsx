@@ -1,8 +1,6 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { StatCard, Card } from "@/components/ui/Card";
 import { Package, Search, CreditCard, Clock, Send } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 
 export default function ShipperDashboard() {
   return (
@@ -13,18 +11,14 @@ export default function ShipperDashboard() {
           <p className="text-slate-500">Welcome back, Sarah. Ready to move some cargo?</p>
         </div>
         <div className="flex gap-3">
-          <Link href="/shipper/search">
-            <Button variant="outline" className="gap-2 bg-white">
-              <Search size={20} />
-              <span>Search Capacity</span>
-            </Button>
-          </Link>
-          <Link href="/shipper/post-load">
-            <Button className="gap-2">
-              <Send size={20} />
-              <span>Post New Load</span>
-            </Button>
-          </Link>
+          <button className="flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+            <Search size={20} />
+            <span>Search Capacity</span>
+          </button>
+          <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+            <Send size={20} />
+            <span>Post New Load</span>
+          </button>
         </div>
       </div>
 
@@ -73,7 +67,7 @@ export default function ShipperDashboard() {
                   { id: "SHP-7425", carrier: "Global Freight", route: "CPT → PE", delivery: "2026-06-27", status: "Booked" },
                   { id: "SHP-7430", carrier: "Swift Movers", route: "PTA → BFN", delivery: "2026-06-28", status: "Pending Pickup" },
                 ].map((row, i) => (
-                  <tr key={i} className="text-sm text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer" onClick={() => window.location.href=`/shipper/shipments/${row.id}`}>
+                  <tr key={i} className="text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                     <td className="py-4 px-2 font-medium text-blue-600">{row.id}</td>
                     <td className="py-4 px-2">{row.carrier}</td>
                     <td className="py-4 px-2">{row.route}</td>
@@ -92,11 +86,6 @@ export default function ShipperDashboard() {
               </tbody>
             </table>
           </div>
-          <div className="mt-4 pt-4 border-t border-slate-50">
-            <Link href="/shipper/shipments" className="text-sm text-blue-600 font-medium hover:underline">
-              View all shipments →
-            </Link>
-          </div>
         </Card>
 
         <div className="space-y-6">
@@ -106,19 +95,15 @@ export default function ShipperDashboard() {
                 { route: "Johannesburg → Durban", date: "2026-06-30", rate: "R 2.20/kg" },
                 { route: "Cape Town → Johannesburg", date: "2026-07-02", rate: "R 2.80/kg" },
               ].map((route, i) => (
-                <Link key={i} href="/shipper/search" className="block">
-                  <div className="p-3 border border-slate-100 rounded-lg hover:border-blue-200 transition-colors cursor-pointer">
-                    <div className="text-sm font-semibold text-slate-900">{route.route}</div>
-                    <div className="flex justify-between mt-2 text-xs text-slate-500">
-                      <span>{route.date}</span>
-                      <span className="text-blue-600 font-bold">{route.rate}</span>
-                    </div>
+                <div key={i} className="p-3 border border-slate-100 rounded-lg hover:border-blue-200 transition-colors cursor-pointer">
+                  <div className="text-sm font-semibold text-slate-900">{route.route}</div>
+                  <div className="flex justify-between mt-2 text-xs text-slate-500">
+                    <span>{route.date}</span>
+                    <span className="text-blue-600 font-bold">{route.rate}</span>
                   </div>
-                </Link>
+                </div>
               ))}
-              <Link href="/shipper/search" className="block text-sm text-blue-600 hover:underline text-center">
-                See more matches
-              </Link>
+              <button className="w-full text-sm text-blue-600 hover:underline text-center">See more matches</button>
             </div>
           </Card>
 
@@ -136,11 +121,9 @@ export default function ShipperDashboard() {
                   <div className="font-bold text-slate-900">{inv.amount}</div>
                 </div>
               ))}
-              <Link href="/shipper/invoices">
-                <Button className="w-full mt-2 py-2 text-sm font-medium bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors">
-                  Pay All
-                </Button>
-              </Link>
+              <button className="w-full mt-2 py-2 text-sm font-medium bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors">
+                Pay All
+              </button>
             </div>
           </Card>
         </div>
@@ -148,4 +131,3 @@ export default function ShipperDashboard() {
     </DashboardLayout>
   );
 }
-

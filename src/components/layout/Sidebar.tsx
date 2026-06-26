@@ -30,7 +30,6 @@ const transporterLinks = [
 const shipperLinks = [
   { href: "/shipper", label: "Overview", icon: LayoutDashboard },
   { href: "/shipper/search", label: "Search Capacity", icon: Route },
-  { href: "/shipper/postings", label: "Manage Postings", icon: FileText },
   { href: "/shipper/post-load", label: "Post Load", icon: Package },
   { href: "/shipper/shipments", label: "My Shipments", icon: Truck },
   { href: "/shipper/invoices", label: "Invoices", icon: FileText },
